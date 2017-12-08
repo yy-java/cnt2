@@ -1,0 +1,18 @@
+1. 命令行到当前目录
+
+2. 执行：bee pack -be="GOOS=linux" com/cnt2/httpserver
+
+
+D:\Go\Go_Path\src\yy.com\cnt2\httpserver>bee pack -be="GOOS=linux" com/cnt2/httpserver
+
+
+3. 包发布系统发布
+
+   1） http://das.sysop.duowan.com/deployment/package/list.jsp
+   2）输入包名cnt2_httpserver_test 搜索( http/grpc 正式环境和测试环境需要单独发布)
+   3）找到最新的版本，点"创建新版本"
+   4) 输入新的‘版本号’，比如在源版本号上加1，输入‘修改日志’信息
+   5) 文件管理，进入bin目录，上传文件，文件路径如 D:\Go\Go_Path\src\yy.com\cnt2\httpserver\httpserver.tar.gz
+   6) 回到基本设置tab，点“打包”，忽略“bin目录下没有找到httpserver文件”，点确定
+   7) 创建发布单，勾选机器
+   8) 发布所选

@@ -1,0 +1,14 @@
+appname = httpserver
+httpport = 8081
+runmode = test
+sessionon = true
+
+[mysql]
+dataSource = db_username:db_pwd@tcp(1.1.1.1:3306)/cnt2_db?charset=utf8&loc=Asia%2FShanghai
+
+
+[etcd]
+dialTimeout    = 3000ms
+requestTimeout = 3000ms
+endpoints      = 1.1.1.1:2379;1.1.1.2:2379;1.1.1.3:2379
+
