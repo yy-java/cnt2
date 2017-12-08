@@ -1,0 +1,19 @@
+{
+  "name": "confms",
+  "version": "1.0.0",
+  "description": "",
+  "main": ".eslintrc.js",
+  "dependencies": {
+    "iview": "^2.4.0",
+    "vuex": "^2.3.1"
+  },
+  "devDependencies": {
+    "css-loader": "^0.28.4",
+    "url-loader": "^0.5.9"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

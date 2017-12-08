@@ -1,0 +1,63 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  SVN_BASE_PATH: https://svn.yy.com/web/gh/static.web.yy.com/git
+  SVN_PROJECT_PATH: $SVN_BASE_PATH/$CI_PROJECT_PATH
+  SVN_COMMIT_MSG:
+    "This commit is triggered by GitLab CI.
+    \n\nJob: $CI_PROJECT_URL/-/jobs/$CI_JOB_ID
+    \nLast Commit: $CI_PROJECT_URL/commit/$CI_COMMIT_SHA\n"
+
+feb_output:
+  stage: build
+  tags:
+    - feb
+  cache:
+    paths:
+    - output/
+    - gitlog
+    policy: push
+  script:
+    - npm i
+    - feb o -s
+  after_script:
+    - git log -1 --pretty=medium >> gitlog
+  only:
+    - /^(master|branch-.*)$/
+
+.deploy_template: &deploy_definition
+  stage: deploy
+  tags:
+    - feb
+  cache:
+    paths:
+    - output/
+    - gitlog
+    policy: pull
+  script:
+    - echo "Deploy to $SVN_PROJECT_PATH/$SVN_SUB_PATH"
+    - svn import output $SVN_PROJECT_PATH/$SVN_SUB_PATH/output --force -m "$SVN_COMMIT_MSG$(cat gitlog)" ||
+      (svn delete $SVN_PROJECT_PATH/$SVN_SUB_PATH --force -m "Delete by GitLab CI." &&
+      svn import output $SVN_PROJECT_PATH/$SVN_SUB_PATH/output --force -m "$SVN_COMMIT_MSG$(cat gitlog)")
+
+deploy_svn_branches:
+  <<: *deploy_definition
+  variables:
+    SVN_SUB_PATH: branches/$CI_COMMIT_REF_NAME
+    GIT_STRATEGY: none
+  environment:
+    name: $CI_COMMIT_REF_NAME
+  only:
+    - /^branch-.*$/
+
+deploy_svn_trunk:
+  <<: *deploy_definition
+  variables:
+    SVN_SUB_PATH: trunk
+    GIT_STRATEGY: none
+  environment:
+    name: master
+  only:
+    - master

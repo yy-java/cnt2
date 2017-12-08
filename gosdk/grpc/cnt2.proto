@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package pb;
+
+option cc_generic_services = true;
+option java_generic_services = true;
+option py_generic_services = true;
+
+service ConfigCenterService {
+	// 根据appId，profile 查询
+	rpc queryAll(QueryRequest) returns (QueryResponse);
+	// 根据appId，profile，key，keyVersion查询，keyVersion=0时，返回最新数据，否则返回指定版本数据
+	rpc queryKey(QueryRequest) returns (ResponseMessage);
+	//  发布处理结果通知（灰度才会有这个回调通知）
+	rpc valueChangeResultNotify(ValueChangeResultRequest) returns(ValueChangeResultResponse);
+	// 启动的时候注册服务:获取服务id
+	rpc registerClient(RegisterRequest) returns (RegisterResponse);
+}
+
+message RegisterRequest {
+	string app = 1;
+	string profile= 2;
+	string server_ip = 3;
+	string pid = 4;
+}
+
+message RegisterResponse {
+	int32 result = 1;
+	string node_id = 2;
+}
+
+message QueryRequest {
+	string app = 1;
+	string profile = 2;
+	string key = 3;
+	int64  key_version = 4;
+}
+
+message QueryResponse{
+	repeated ResponseMessage result = 1;
+}
+
+message ResponseMessage {
+	string key = 1;
+	string profile = 2;
+	string path = 3;
+	string value = 4;
+	int64  version = 5;
+}
+
+message ValueChangeResultRequest {
+	string node_id = 1;
+	string app    = 2;
+	string profile =3;
+	string key    = 4;
+	string deploy_id= 5;
+	
+
+	enum ValueChangeResult {
+		FAILED = 0;
+		SUCCESS  = 1;
+	};
+
+	ValueChangeResult  result = 6;
+	string msg = 7;
+	int64  version = 8;
+}
+
+message ValueChangeResultResponse {
+	int32 status = 1;
+	string msg =  2;
+}
+
+

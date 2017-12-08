@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <meta name="keywords" content="{{keywords}}">
+    <meta name="description" content="{{description}}">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <meta name="applicable-device" content="mobile">
+    <link rel="dns-prefetch" href="//res.yy.com">
+    <link rel="dns-prefetch" href="//page.yy.com">
+    <link rel="dns-prefetch" href="//makefriends.bs2.yy.com">
+    <link rel="dns-prefetch" href="//makefriends.bs2dl.yy.com">
+    {{#if __PROD__}}
+        <link rel="stylesheet" href="./assets/css/{{stylesheet}}.css">
+    {{/if}}
+</head>
+<body>
+{% body %}
+
+<script src="http://res.yy.com/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="http://res.udb.duowan.com/js/oauth/udbsdk/proxy/udbsdkproxy.min.js"></script>
+{{#if __PROD__}}
+    <script src="http://res.yy.com/libs/vue/2.3.3/vue.min.js"></script>
+{{else}}
+    <script src="http://res.yy.com/libs/vue/2.3.3/vue.js"></script>
+{{/if}}
+<script src="./assets/js/{{script}}.js"></script>
+
+</body>
+</html>
