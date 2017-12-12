@@ -59,6 +59,7 @@ git clone https://github.com/yy-java/cnt2.git
 
 ### 启动GrpcServer
 
+cnt2也是一个自给自足的服务治理中心，所以建议部署多个GrpcServer实例，java/go sdk会轮询访问这些实例。
 ```
 cd ${download-path}/cnt2/grpcserver
 go install
