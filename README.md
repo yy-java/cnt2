@@ -58,10 +58,12 @@ go get github.com/smartystreets/goconvey
 ### Download Code
 
 ```
-cd ${download-path}
+cd ${GOPATH}/src
 
 git clone https://github.com/yy-java/cnt2.git
 ```
+
+修改httpserver和grpcserver目录下的conf配置文件，指向etcd集群和Mysql数据库
 
 ### 启动GrpcServer
 
@@ -70,7 +72,11 @@ cnt2也是一个自给自足的服务治理中心，所以建议部署多个Grpc
 cd ${download-path}/cnt2/grpcserver
 go install
 cd $GOPATH/bin/
-bee run yy.com/cnt2/grpcserver
+
+//windows
+grpcserver.exe
+//Linux
+/grpcserver
 ```
 
 ### 启动HttpServer
@@ -79,7 +85,11 @@ bee run yy.com/cnt2/grpcserver
 cd ${download-path}/cnt2/httpserver
 go install
 cd $GOPATH/bin/
-bee run yy.com/cnt2/httpserver
+
+//windows
+httpserver.exe
+//Linux
+/httpserver
 ```
 
 ### 启动Consle
