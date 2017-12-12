@@ -22,9 +22,10 @@ Mysql中最新的配置信息。
 * *后台管理*: 清新简洁的[后台管理][console]，与HttpServer进程提供的接口交互。
 * *客户端SDK*: 目前提供[java][javasdk] 和 [go][gosdk] 两种语言的SDK
 
-## 项目结构图
+## 项目结构图和流程图
 
 ![structure](statics/structure.png)
+![structure](statics/flow.png)
 
 ## 开始
 
