@@ -1,131 +1,82 @@
-### Initial Project
-```
-git clone http://github.com/yy-java/cnt2.git
+[console]: https://github.com/yy-java/cnt2-console
+[gosdk]: https://github.com/yy-java/cnt2-gosdk
+[javasdk]: https://github.com/yy-java/cnt2-javasdk
+[etcd]: https://github.com/coreos/etcd
+[etcd-cluster-install]: https://github.com/coreos/etcd/blob/master/Documentation/op-guide/clustering.md
+[go-install]: https://golang.org/dl/
 
-```
+# cnt2
 
-### inital dependency
+   cnt2是高可用的分布式配置中心, 是config center v2的简写， v2版本是在我们公司使用的v1版本上改进而来的。
+采用go语言编写，客户端通过监听[etcd][etcd]集群感知配置的变化，再通过gRPC调用GrpcServer服务查询保存在
+Mysql中最新的配置信息。
+
+具有如下的功能:
+
+* *实时性*: 一键发布，立马生效
+* *多环境*: 自定义环境，一般分，开发、测试、生产环境1、生产环境2...生产环境N。多生产环境间接实现了分集群配置管理。
+* *灰度发布*: 灰度发布，降低风险
+* *配置回滚*: 能查看配置的历史版本，可以回滚到任意一个版本
+* *审核机制*: 只能发布已审核的配置，出了问题拉上审核者一块来背锅^_^
+* *权限管理*: 基于App的维度分管理员和开发者，还可以设置超级管理员来管理所有的App
+* *后台管理*: 清新简洁的[后台管理][console]，与HttpServer进程提供的接口交互。
+* *客户端SDK*: 目前提供[java][javasdk] 和 [go][gosdk] 两种语言的SDK
+
+## 项目结构图
+
+![structure](statics/structure.png)
+
+## 开始
+
+### 安装go
+
+ [go][go-install]版本必须是1.9+
+ 
+### 安装etcd
+
+ 查看[etcd集群安装文档][etcd-cluster-install]
+
+### 建立Mysql数据表
+ 通过mysql目录下cnt2_db.sql建库建表
+ 
+ 
+### 安装必须的go依赖库
 ```
 go get github.com/astaxie/beego //beego
 go get github.com/beego/bee //beego tools
 go get github.com/coreos/etcd/clientv3  // etcd client
 go get github.com/go-sql-driver/mysql  // mysql driver
-go install github.com/boltdb/bolt
-go get github.com/coreos/etcd
-
 go get github.com/smartystreets/goconvey // test
 ```
 
-### Generate gRpc Code
+### Download Code
+
 ```
-go get -u github.com/golang/protobuf/protoc-gen-go
-protoc -I pb/ pb/cnt2.proto --go_out=plugins=grpc:pb
+cd ${download-path}
+
+git clone https://github.com/yy-java/cnt2.git
 ```
 
-### Generate thrift code
-```
-go get git.apache.org/thrift.git/lib/go/thrift
-thrift -r --gen go secuserinfo.thrift
-```
+### 启动GrpcServer
 
-## project component
-### grpcserver
-API module to exposing gRPC service to SDKs
-
-本地启动:
 ```
-cd ${workspace}/github.com/yy-java/cnt2/grpcserver
+cd ${download-path}/cnt2/grpcserver
 go install
 cd $GOPATH/bin/
 bee run yy.com/cnt2/grpcserver
 ```
-http://localhost:8080/v1/object
 
-测试环境部署启动:
+### 启动HttpServer
+
 ```
-- 本地编译
-cd ${workspace}/github.com/yy-java/cnt2/grpcserver
-bee pack -be="GOOS=linux" com/cnt2/grpcserver
-
-- 构建发布包
-登陆http://yydeploy1.sysop.duowan.com/package/index.jspx?name=cnt2_grpcserver_test
-创建cnt2_grpcserver_test包的新版本，填写新版本号
-上传编译包${workspace}/github.com/yy-java\cnt2\grpcserver\grpcserver.tar.gz到发布包的$INSTALL_PATH/bin目录
-保存打包后安装到
-- 启动命令
-sudo /data/services/cnt2_grpcserver_test-$VERSION/admin/start.sh
-- 日志
-cat /data/services/cnt2_grpcserver_test-$VERSION/admin/start.log
-```
-
-生产环境部署启动:
-```
-- 本地编译
-cd ${workspace}/github.com/yy-java/cnt2/grpcserver
-bee pack -be="GOOS=linux" com/cnt2/grpcserver
-
-- 构建发布包
-登陆http://yydeploy1.sysop.duowan.com/package/index.jspx?name=cnt2_grpcserver
-创建cnt2_grpcserver包的新版本，填写新版本号
-上传编译包${workspace}/github.com/yy-java\cnt2\grpcserver\grpcserver.tar.gz到发布包的$INSTALL_PATH/bin目录
-保存打包后安装到221.228.91.155/221.228.83.119/113.108.65.32
-- 启动命令
-sudo /data/services/cnt2_grpcserver-$VERSION/admin/start.sh
-- 日志
-cat /data/services/cnt2_grpcserver-$VERSION/admin/start.log
-```
-
-### httpserver
-API module to exposing http service to cnt console
-
-本地启动:  
-```
-cd ${workspace}/github.com/yy-java/cnt2/httpserver
+cd ${download-path}/cnt2/httpserver
 go install
 cd $GOPATH/bin/
 bee run yy.com/cnt2/httpserver
 ```
-http://localhost:8081/app/test
+
+### 启动Consle
 
 
-测试环境部署启动:
-```
-- 本地编译
-cd ${workspace}/github.com/yy-java/cnt2/httpserver
-bee pack -be="GOOS=linux" com/cnt2/httpserver
+请查看[后台管理][console]
 
-- 构建发布包
-登陆http://yydeploy1.sysop.duowan.com/package/index.jspx?name=cnt2_httpserver_test
-创建cnt2_httpserver_test包的新版本，填写新版本号
-上传编译包${workspace}/github.com/yy-java\cnt2\httpserver\httpserver.tar.gz到发布包的$INSTALL_PATH/bin目录
-保存打包后安装到
-- 启动命令
-sudo /data/services/cnt2_httpserver_test-$VERSION/admin/start.sh
-- 日志
-cat /data/services/cnt2_httpserver_test-$VERSION/admin/start.log
-- 探测地址
-http://cnt-api-test.yy.com/app/test
-```
-
-生产环境部署启动:
-```
-- 本地编译
-cd ${workspace}/github.com/yy-java/cnt2/httpserver
-bee pack -be="GOOS=linux" com/cnt2/httpserver
-
-- 构建发布包
-登陆http://yydeploy1.sysop.duowan.com/package/index.jspx?name=cnt2_httpserver
-创建cnt2_httpserver包的新版本，填写新版本号
-上传编译包${workspace}/github.com/yy-java\cnt2\httpserver\httpserver.tar.gz到发布包的$INSTALL_PATH/bin目录
-保存打包后安装到
-- 启动命令
-sudo /data/services/cnt2_httpserver-$VERSION/admin/start.sh
-- 日志
-cat /data/services/cnt2_httpserver-$VERSION/admin/start.log
-- 探测地址
-http://cnt-api.yy.com/app/test
-```
-
-- 安装使用命令
-
-go get 

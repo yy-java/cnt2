@@ -11,8 +11,12 @@ File Encoding         : 65001
 
 Date: 2017-12-08 11:51:28
 */
+CREATE DATABASE IF NOT EXISTS cnt2_db DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_general_ci;
+
+USE cnt2_db;
 
 SET FOREIGN_KEY_CHECKS=0;
+
 
 -- ----------------------------
 -- Table structure for app
@@ -49,7 +53,7 @@ CREATE TABLE `config` (
   `approver` varchar(50) DEFAULT NULL COMMENT '审核人',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_config` (`app`,`profile`,`key`)
-) ENGINE=InnoDB AUTO_INCREMENT=270 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for config_history
@@ -71,7 +75,7 @@ CREATE TABLE `config_history` (
   `operate_type` int(11) DEFAULT NULL COMMENT '发布类型，新增，删除，修改，回滚',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_config_his` (`app`,`profile`,`key`,`cur_version`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=732 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for node
@@ -103,7 +107,7 @@ CREATE TABLE `node_publish` (
   `publish_type` tinyint(1) DEFAULT NULL COMMENT '发布类型：0-灰度；1-全量',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_unique` (`node_id`,`app`,`profile`,`key`,`version`)
-) ENGINE=InnoDB AUTO_INCREMENT=6705 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for profile
@@ -129,4 +133,4 @@ CREATE TABLE `user_auth` (
   `permission` tinyint(1) DEFAULT '1' COMMENT '权限：1-开发；9-管理',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_uid_app` (`uid`,`app`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
