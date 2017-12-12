@@ -39,7 +39,7 @@ func (c *BaseController) Prepare() {
 	header := c.Ctx.ResponseWriter.Header()
 	header.Set("Access-Control-Allow-Origin", getReferHost(c.Ctx.Request.Header.Get("Referer")))
 	header.Set("Access-Control-Allow-Credentials", "true")
-	c.Uid, c.Username = account.GetLoginInfo(c.Ctx.Request)
+	c.Uid, c.Username = GetLoginInfo(c.Ctx.Request)
 
 	if c.Uid <=0 {
 		c.Uid = c.GetSession("uid").(int64)
