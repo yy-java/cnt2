@@ -65,6 +65,13 @@ type UserAuth struct {
 	Permission int8   `orm:"size(1)" json:"permission"`
 }
 
+type User struct {
+	Uid         int64  `orm:"pk;auto" json:"uid"`
+	Username      string `orm:"size(40)" json:"username"`
+	Pwd        string `orm:"size(64)" json:"pwd"`
+	CreateTime  time.Time `orm:"auto_now;column(create_time)" json:"createTime"`
+}
+
 type Config struct {
 	Id               int64     `orm:"pk;column(id);auto" json:"id"`
 	App              string    `orm:"column(app)" json:"app"`

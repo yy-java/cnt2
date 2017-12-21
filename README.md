@@ -22,10 +22,23 @@ Mysql中最新的配置信息。
 * *后台管理* : 清新简洁的[管理后台][console]，与HttpServer进程提供的接口交互。
 * *客户端SDK* : 目前提供[java][javasdk] 和 [go][gosdk] 两种语言的SDK
 
-## 项目结构图和流程图
+## 项目结构图
 
 ![structure](statics/structure.png)
+各模块解释：
+1. **GrpcServer** : GrpcServer进程，用于提供查询配置信息接口。 
+2. **HttpServer** : HttpServer进程，用于给Cnt2-Console提供查询和操作接口。
+3. **Cnt2-Console** : 管理后台进程。
+4. **Business server** : 业务进程，通过sdk与配置中心交互。
+5. **SDK** : 业务进程使用，SDK监听ETCD节点信息，当获得了变化，就去GrpcServer拉取最新的配置信息。
+6. **ETCD CLUSTER** : ETCD集群
+7. **Mysql** : 配置信息等一些数据存储。
+
+
+## 流程图
 ![structure](statics/flow.png)
+
+
 
 ## 开始
 
@@ -33,7 +46,7 @@ Mysql中最新的配置信息。
 
  [go][go-install]版本必须是1.9+
  
-### 安装etcd
+### 安装etcd集群
 
  查看[etcd集群安装文档][etcd-cluster-install]
 

@@ -10,8 +10,6 @@ import (
 	"github.com/yy-java/cnt2/httpserver/utils"
 	"github.com/yy-java/cnt2/service/errors"
 	userService "github.com/yy-java/cnt2/service/user"
-	"net/http"
-	"strconv"
 )
 
 // Operations about App
@@ -39,12 +37,9 @@ func (c *BaseController) Prepare() {
 	header := c.Ctx.ResponseWriter.Header()
 	header.Set("Access-Control-Allow-Origin", getReferHost(c.Ctx.Request.Header.Get("Referer")))
 	header.Set("Access-Control-Allow-Credentials", "true")
-	c.Uid, c.Username = GetLoginInfo(c.Ctx.Request)
 
-	if c.Uid <=0 {
-		c.Uid = c.GetSession("uid").(int64)
-		c.Username = c.GetSession("username").(string)
-	}
+	c.Uid = c.GetSession("uid").(int64)
+	c.Username = c.GetSession("username").(string)
 
 	c.Data["startTime"] = time.Now().UnixNano()
 
@@ -84,19 +79,6 @@ func (c *BaseController) Prepare() {
 		}
 	}
 
-}
-func GetLoginInfo(req *http.Request) (uid int64, username string) {
-	uid = 0
-	username = ""
-	uidCookie,err := req.Cookie("uid")
-	if err == nil{
-		uidi, _ := strconv.Atoi(uidCookie.Value)
-		uid = int64(uidi)
-
-		usernameCookie,_ := req.Cookie("username")
-		username = usernameCookie.Value
-	}
-	return
 }
 
 func (c *BaseController) Finish() {
