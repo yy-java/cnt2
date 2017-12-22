@@ -82,28 +82,47 @@ git clone https://github.com/yy-java/cnt2.git
 
 cnt2也是一个自给自足的服务治理中心，所以建议部署多个GrpcServer实例，java/go sdk会轮询访问这些实例。
 ```
-cd ${download-path}/cnt2/grpcserver
-go install
-cd $GOPATH/bin/
+$ cd ${download-path}/cnt2/grpcserver
 
-//windows
-grpcserver.exe
-//Linux
-/grpcserver
+>>>>>Linux运行方式
+$ bee pack -be="GOOS=linux"
+//可以查看生成了grpcserver.tar.gz包
+$ ll
+//解压grpcserver.tar.gz后执行
+$ tar -zxf grpcserver.tar.gz grpcserver
+$ cd grpcserver
+// 运行
+$ /grpcserver &
+<<<<<Linux运行方式
+
+>>>>>Windows运行方式
+$ bee pack -be="GOOS=windows" -f=zip
+$ 可以看到一个grpcserver.zip，解压
+$ 双击运行grpcserver.exe
+<<<<<Windows运行方式
 ```
 
 ### 启动HttpServer
 
 ```
 cd ${download-path}/cnt2/httpserver
-go install
-cd $GOPATH/bin/
 
-//windows
-httpserver.exe
-//Linux
-/httpserver
-```
+>>>>>Linux运行方式
+$ bee pack -be="GOOS=linux"
+//可以查看生成了httpserver.tar.gz包
+$ ll
+//解压httpserver.tar.gz后执行
+$ tar -zxf httpserver.tar.gz httpserver
+$ cd httpserver
+// 运行
+$ /httpserver &
+<<<<<Linux运行方式
+
+>>>>>Windows运行方式
+$ bee pack -be="GOOS=windows" -f=zip
+$ 可以看到一个httpserver.zip，解压
+$ 双击运行httpserver.exe
+<<<<<Windows运行方式
 
 ### 启动Consle
 
