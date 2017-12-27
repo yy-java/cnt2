@@ -23,6 +23,7 @@ var whitelist = map[string]int{
 	"/app/test":        0,
 	"/app/create":      0,
 	"/publish/queryIp": 0,
+	"/user/login":0,
 }
 
 func getReferHost(uri string) string {
