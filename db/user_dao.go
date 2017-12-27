@@ -48,11 +48,11 @@ func (user *User) FindAll() ([]*User, error) {
 }
 func (user *User) Login() (*User, error) {
 	o := orm.NewOrm()
-	var u  *User
+	var u User
 	_, err := o.Raw("select * from user where username =? and pwd=?  limit 1",user.Username,user.Pwd).QueryRows(&u)
 	if err != nil {
 		log.Printf("Login username {%v} failed, err: %v", user.Username,err)
 		return nil, err
 	}
-	return u, nil
+	return &u, nil
 }
