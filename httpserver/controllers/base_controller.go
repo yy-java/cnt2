@@ -38,8 +38,15 @@ func (c *BaseController) Prepare() {
 	header.Set("Access-Control-Allow-Origin", getReferHost(c.Ctx.Request.Header.Get("Referer")))
 	header.Set("Access-Control-Allow-Credentials", "true")
 
-	c.Uid = c.GetSession("uid").(int64)
-	c.Username = c.GetSession("username").(string)
+	uid := c.GetSession("uid")
+	if uid != nil{
+		c.Uid = uid.(int64)
+		c.Username = c.GetSession("username").(string)
+	}
+	username := c.GetSession("username")
+	if username != nil{
+		c.Username = username.(string)
+	}
 
 	c.Data["startTime"] = time.Now().UnixNano()
 
