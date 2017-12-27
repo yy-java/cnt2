@@ -45,4 +45,9 @@ func init() {
 			&controllers.ProfileController{},
 		),
 	))
+	beego.AddNamespace(beego.NewNamespace("/user",
+		beego.NSInclude(
+			&controllers.UserController{},
+		),
+	))
 }
