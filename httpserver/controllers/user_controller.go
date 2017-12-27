@@ -21,13 +21,13 @@ func (req *UserController) Login() {
 	log.Printf("Login username:%s, pwd:%d", username,pwd)
 
 	user := db.User{Username: username,Pwd:pwd}
-	user.Login()
-	if user.Uid <=  0 {
+	newUser,err :=user.Login()
+	if err != nil || newUser.Uid <=  0 {
 		req.JsonResp(nil, errors.New("Not found"))
 		return
 	}
-	req.SetSession("uid",user.Uid)
-	req.SetSession("username",user.Username)
+	req.SetSession("uid",newUser.Uid)
+	req.SetSession("username",newUser.Username)
 
 	req.JsonResp(nil, nil)
 }
