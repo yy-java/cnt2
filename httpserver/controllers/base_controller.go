@@ -23,7 +23,6 @@ var whitelist = map[string]int{
 	"/app/test":        0,
 	"/app/create":      0,
 	"/publish/queryIp": 0,
-	"/user/login":0,
 }
 
 func getReferHost(uri string) string {
@@ -53,7 +52,7 @@ func (c *BaseController) Prepare() {
 
 	reqURI := c.Ctx.Request.RequestURI
 	log.Printf("path:%s, uid:%s, username:%s", reqURI, c.Uid, c.Username)
-	if c.Uid <= 0 {
+	if c.Uid <= 0 && strings.IndexAny(reqURI,"/user/login") == -1 {
 		c.JsonResp(nil, errors.ErrUnauthenticated)
 		c.ServeJSON()
 	}
