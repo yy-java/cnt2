@@ -10,6 +10,7 @@ import (
 
 type UserController struct {
 	BaseController
+
 }
 
 // @router /login [post,get]

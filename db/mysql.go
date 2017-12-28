@@ -9,7 +9,7 @@ func init() {
 	//dataSource := beego.AppConfig.String("mysql::dataSource")
 
 	// register model
-	orm.RegisterModel(new(App), new(UserAuth), new(Config), new(Node), new(ConfigHistory), new(NodePublish), new(Profile))
+	orm.RegisterModel(new(App), new(UserAuth), new(Config), new(Node), new(ConfigHistory), new(NodePublish), new(Profile),new(User))
 
 	// set default database
 	//orm.RegisterDataBase("default", "mysql", dataSource, 30, 100)
