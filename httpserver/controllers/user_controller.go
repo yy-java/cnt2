@@ -38,22 +38,20 @@ func (req *UserController) Login() {
 
 	req.JsonResp(nil, nil)
 }
-// eg:http://localhost:8081/userauth/logout
+// eg:http://localhost:8081/user/logout
 // @router /logout [post,get]
-func (u *UserController) Logout() {
-	defer u.ServeJSON()
-	u.Ctx.SetCookie("uid","")
-	u.Ctx.SetCookie("username","")
-	u.Ctx.SetCookie("isAdmin","")
-	u.DestroySession()
-	u.JsonResp(nil, nil)
+func (req *UserController) Logout() {
+	defer req.ServeJSON()
+	req.Ctx.SetCookie("uid","")
+	req.Ctx.SetCookie("username","")
+	req.Ctx.SetCookie("isAdmin","")
+	req.DestroySession()
+	req.JsonResp(nil, nil)
 }
-
 
 // @router /create [post,get]
 func (req *UserController) Create() {
 	defer req.ServeJSON()
-
 
 	username := req.GetString("username")
 	pwd := req.GetString("pwd")
