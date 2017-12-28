@@ -113,13 +113,3 @@ func (u *UserAuthController) QueryCurUserWithApp() {
 	}
 }
 
-// eg:http://localhost:8081/user/logout
-// @router /logout [post,get]
-func (req *UserAuthController) Logout() {
-	defer req.ServeJSON()
-	req.Ctx.SetCookie("uid","")
-	req.Ctx.SetCookie("username","")
-	req.Ctx.SetCookie("isAdmin","")
-	req.DestroySession()
-	req.JsonResp(nil, nil)
-}
