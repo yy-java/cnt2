@@ -31,7 +31,22 @@ func (req *UserController) Login() {
 	req.SetSession("username",newUser.Username)
 	req.Ctx.SetCookie("uid", strconv.FormatInt(newUser.Uid,10))
 	req.Ctx.SetCookie("username", newUser.Username)
+
+	if req.GetSession("isAdmin") == true {
+		req.Ctx.SetCookie("isAdmin", "true")
+	}
+
 	req.JsonResp(nil, nil)
+}
+// eg:http://localhost:8081/userauth/logout
+// @router /logout [post,get]
+func (u *UserController) Logout() {
+	defer u.ServeJSON()
+	u.Ctx.SetCookie("uid","")
+	u.Ctx.SetCookie("username","")
+	u.Ctx.SetCookie("isAdmin","")
+	u.DestroySession()
+	u.JsonResp(nil, nil)
 }
 
 
