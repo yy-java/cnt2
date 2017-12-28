@@ -117,6 +117,8 @@ func (u *UserAuthController) QueryCurUserWithApp() {
 // @router /logout [post,get]
 func (u *UserAuthController) Logout() {
 	defer u.ServeJSON()
+	u.Ctx.SetCookie("uid","")
+	u.Ctx.SetCookie("username","")
 	u.DestroySession()
 	u.JsonResp(nil, nil)
 }
