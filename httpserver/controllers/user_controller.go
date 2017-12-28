@@ -5,6 +5,7 @@ import (
 	"github.com/yy-java/cnt2/db"
 	. "github.com/yy-java/cnt2/service/errors"
 	"errors"
+	"strconv"
 )
 
 type UserController struct {
@@ -28,7 +29,8 @@ func (req *UserController) Login() {
 	}
 	req.SetSession("uid",newUser.Uid)
 	req.SetSession("username",newUser.Username)
-
+	req.Ctx.SetCookie("uid", strconv.FormatInt(newUser.Uid,10))
+	req.Ctx.SetCookie("username", newUser.Username)
 	req.JsonResp(nil, nil)
 }
 
