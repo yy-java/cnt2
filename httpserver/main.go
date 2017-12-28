@@ -5,6 +5,7 @@ import (
 	"github.com/astaxie/beego/orm"
 	"log"
 	_ "github.com/yy-java/cnt2/httpserver/routers"
+	"time"
 )
 
 func main() {
@@ -17,4 +18,7 @@ func main() {
 	orm.RegisterDataBase("default", "mysql", beego.AppConfig.String("mysql.dataSource"), 30, 100)
 
 	beego.Run()
+
+
+	time.Sleep(100 * time.Second)
 }
