@@ -82,7 +82,7 @@ git clone https://github.com/yy-java/cnt2.git
 
 cnt2也是一个自给自足的服务治理中心，所以建议部署多个GrpcServer实例，java/go sdk会轮询访问这些实例。
 ```
-$ cd ${GOPATH}/src/cnt2/grpcserver
+$ cd ${GOPATH}/src/github.com/yy-java/cnt2/grpcserver
 
 >>>>>Linux运行方式
 $ bee pack -be="GOOS=linux"
@@ -105,7 +105,7 @@ $ 双击运行grpcserver.exe
 ### 启动HttpServer
 
 ```
-cd ${GOPATH}/src/cnt2/httpserver
+cd ${GOPATH}/src/github.com/yy-java/cnt2/httpserver
 
 >>>>>Linux运行方式
 $ bee pack -be="GOOS=linux"
