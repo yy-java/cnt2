@@ -62,4 +62,7 @@ func main() {
 	grpcServer := server.NewServer(grpcServerPort)
 	GrpcServerRegister(grpcServerPort)
 	server.Start(grpcServer)
+	log.Println("start sucess.............................")
+	out := make(chan int)
+	<- out
 }
