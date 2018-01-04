@@ -17,6 +17,15 @@ USE cnt2_db;
 
 SET FOREIGN_KEY_CHECKS=0;
 
+CREATE TABLE `user` (
+  `uid` bigint(20) NOT NULL AUTO_INCREMENT,
+  `username` varchar(40) DEFAULT NULL,
+  `pwd` varchar(64) DEFAULT NULL,
+  `create_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=10005 DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `user` (`uid`, `username`, `pwd`, `create_time`) VALUES ('10000', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '2018-01-04 17:02:03');
 
 -- ----------------------------
 -- Table structure for app
