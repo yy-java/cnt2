@@ -71,7 +71,7 @@ go get github.com/smartystreets/goconvey
 ### Download Code
 
 ```
-cd ${GOPATH}/src
+cd ${GOPATH}/src/github.com/yy-java
 
 git clone https://github.com/yy-java/cnt2.git
 ```
