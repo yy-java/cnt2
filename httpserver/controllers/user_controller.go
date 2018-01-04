@@ -24,7 +24,7 @@ func (req *UserController) Login() {
 
 	user := db.User{Username: username,Pwd:pwd}
 	newUser,err :=user.Login()
-	if err != nil || newUser.Uid <=  0 {
+	if err != nil || newUser == nil {
 		req.JsonResp(nil, errors.New("Not found"))
 		return
 	}
